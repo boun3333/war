@@ -10,8 +10,7 @@ phases:
   pre_build:
     commands:
       - echo [PRE_BUILD] 퍼블릭 ECR 로그인
-      - aws ecr-public get-login-password --region us-east-1 \
-        | docker login --username AWS --password-stdin public.ecr.aws/q9c7w1n2
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/q9c7w1n2
 
   build:
     commands:
