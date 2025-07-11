@@ -1,12 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo [INSTALL] 도구 확인 및 환경 설정
-      - nohup /usr/local/bin/dockerd-entrypoint.sh & # Docker 데몬 수동 실행
-      - timeout 15 sh -c "until docker info; do sleep 1; done"
-
   pre_build:
     commands:
       - echo [PRE_BUILD] 퍼블릭 ECR 로그인
