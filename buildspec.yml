@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk8
+      docker: 18
+    commands:
+      - echo [INSTALL] 환경 준비 중...
+
+  pre_build:
+    commands:
+      - echo [PRE_BUILD] 퍼블릭 ECR 인증 중...
+      - aws ecr-public get-login-password --region us-east-1 \
+        | docker login --username AWS --password-stdin public.ecr.aws/q9c7w1n2
+
+  build:
+    commands:
+      - echo [BUILD] WAR 파일 빌드 중...
+      - mvn clean package
+      - echo [BUILD] Docker 이미지 빌드 중...
+      - docker build -t hwtesta .
+
+  post_build:
+    commands:
+      - echo [POST_BUILD] 이미지 태그 및 퍼블릭 ECR 푸시 중...
+      - docker tag hwtesta:latest public.ecr.aws/q9c7w1n2/hwtesta:latest
+      - docker push public.ecr.aws/q9c7w1n2/hwtesta:latest
