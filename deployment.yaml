@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hwtesta-deployment
+  namespace: default
+  labels:
+    app: hwtesta
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hwtesta
+  template:
+    metadata:
+      labels:
+        app: hwtesta
+    spec:
+      containers:
+      - name: hwtesta-container
+        image: IMAGE_PLACEHOLDER  # CD 파이프라인이 이 부분을 15번 주소로 바꿀 겁니다.
+        ports:
+        - containerPort: 8080
